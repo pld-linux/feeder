@@ -1,0 +1,48 @@
+diff -urN feeder-2.1.4.orig/usr/lib/perl5/site_perl/Feeder/feeder.pm feeder-2.1.4/usr/lib/perl5/site_perl/Feeder/feeder.pm
+--- feeder-2.1.4.orig/usr/lib/perl5/site_perl/Feeder/feeder.pm	2001-08-13 12:08:36.000000000 +0200
++++ feeder-2.1.4/usr/lib/perl5/site_perl/Feeder/feeder.pm	2003-06-26 16:20:47.000000000 +0200
+@@ -71,12 +71,31 @@
+ =cut
+ 
+ sub parse_headers {
++	my $orig, $change;
+ 	my $val=0;
+-	${$_[0]} =~ s/^Subject: (Re: |Odp: )+/Subject: Re: /im if ($ODP2RE eq "yes");
++	${$_[0]} =~ s/\n\s+/ /g;
+ 	if ($QP28bit eq "yes") {
+-		$val=1 if (${$_[0]} =~ /^Content-Transfer-Encoding: (?i:quoted-printable)$/m);
+-		${$_[0]} =~ s/^(Content-Transfer-Encoding: )(?i:quoted-printable|7bit)$/${1}8bit/m;
++		${$_[0]} =~ s/(=\?(?i:iso-8859-[12]\?q)\?[!-~\s]*?\?=)\s+(=\?(?i:iso-8859-[12]\?q)\?[!-~\s]*?\?=)/$1$2/og;
++		${$_[0]} =~ s/(=\?(?i:iso-8859-[12]\?q)\?[!-~\s]*?\?=)\s+(=\?(?i:iso-8859-[12]\?q)\?[!-~\s]*?\?=)/$1$2/g;
++		while (/(=\?(?i:iso-8859-[12]\?q)\?([!-~\s]*?)\?=)/) {
++			$orig=$1;
++			$change=$2;
++			$change=~s/_/ /g;
++			$change=~s/=([\dA-F]{2})/chr hex $1/ge;
++			s/\Q$orig\E/$change/g;
++		}
++		while (/(=\?(?i:iso-8859-[12]\?b)\?([!-~\s]*?)\?=)/) {
++			$orig=$1;
++			$change=$2;
++			$change=~s/=+$//g;
++			$change=~tr|A-Za-z0-9+/| -_|;
++			$change=unpack("u",chr(32+length($change)*3/4).$change);
++			s/\Q$orig\E/$change/g;
++		}
++		$val=1 if ${$_[0]} =~ s/^Content-Transfer-Encoding: (?i:quoted-printable)$/Content-Transfer-Encoding: 8bit/m;
+ 	}
++	${$_[0]} =~ tr/•åèπúü/°¶¨±∂º/ if ($CP2ISO eq "yes");
++	${$_[0]} =~ s/^Subject: (Re: |Odp: )+/Subject: Re: /im if ($ODP2RE eq "yes");
+ 	return $val;
+ }
+ 
+@@ -89,8 +108,8 @@
+ 
+ sub parse_contents {
+ 	if ($_[1]) {
+-		s/=([\dA-F]{2})/chr hex $1/ge;
+ 		s/=\n//g;
++		s/=([\dA-F]{2})/chr hex $1/ge;
+ 	}
+ 	${$_[0]} =~ tr/•åèπúü/°¶¨±∂º/ if ($CP2ISO eq "yes");
+ }
