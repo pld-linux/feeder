@@ -5,7 +5,7 @@ Name:		feeder
 Version:	2.1.4
 Release:	1
 License:	GPL
-Vendor:		feed-pl@egroups.com /subscription required/
+Vendor:		feed-pl@egroups.com /subscription required or own server/
 Group:		Applications/System
 Group(de):	Applikationen/System
 Group(pl):	Aplikacje/System
@@ -16,6 +16,14 @@ BuildRequires:	rpm-perlprov >= 3.0.3-16
 BuildArch:	noarch
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
+%package server
+Summary:        Support for compressed usenet feeds
+Summary(pl):    Obs³uga feedu kompresowanych newsów
+Requires:	Perl-cgi
+Group:          Applications/System
+Group(de):      Applikationen/System
+Group(pl):      Aplikacje/System
+
 %description
 A set of client scripts for downloading compressed newsfeed and
 transfering it to a local (proxy)newsserver.
@@ -24,19 +32,29 @@ transfering it to a local (proxy)newsserver.
 Zestaw skryptów klienckich do ¶ci±gania i transferu do lokalnego
 news(proxy)serwera postów w kompresowanych paczkach.
 
+
+%description server
+A set of server scripts for downloading compressed newsfeed and
+transfering it to a local (proxy)newsserver.
+
+%description -l pl server
+Zestaw skryptów serwerowych do ¶ci±gania i transferu do lokalnego
+news(proxy)serwera postów w kompresowanych paczkach i udostêpniania ich
+klientom.
+
 %prep
 %setup -q
 
 %install
 rm -rf $RPM_BUILD_ROOT
 install -d $RPM_BUILD_ROOT%{_sysconfdir} \
-	$RPM_BUILD_ROOT{%{_bindir},%{perl_sitelib}/Feeder} \
+	$RPM_BUILD_ROOT{%{_bindir},%{_sbindir},%{perl_sitelib}/Feeder} \
 	$RPM_BUILD_ROOT{%{_mandir}/pl/man{1,5,7},%{_var}/spool/%{name}2}
 
 install etc/feeder.conf $RPM_BUILD_ROOT%{_sysconfdir}
 install usr/lib/perl5/site_perl/Feeder/feeder.pm $RPM_BUILD_ROOT%{perl_sitelib}/Feeder
 install usr/local/bin/* $RPM_BUILD_ROOT%{_bindir}
-install %{SOURCE1} $RPM_BUILD_ROOT%{_bindir}
+install %{SOURCE1} $RPM_BUILD_ROOT%{_sbindir}
 install usr/local/share/man/pl/man1/* $RPM_BUILD_ROOT%{_mandir}/pl/man1
 install usr/local/share/man/pl/man5/* $RPM_BUILD_ROOT%{_mandir}/pl/man5
 install usr/local/share/man/pl/man7/* $RPM_BUILD_ROOT%{_mandir}/pl/man7
@@ -56,3 +74,6 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,news,news) %dir %{_var}/spool/%{name}2
 %attr(664,news,news) %config(noreplace) %verify(not md5 size mtime) %{_var}/spool/%{name}2/*
 %lang(pl) %{_mandir}/pl/man?/*
+
+%files server
+%attr(755,news,news) %{_sbindir}
