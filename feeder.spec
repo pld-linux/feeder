@@ -12,7 +12,6 @@ Source0:	%{name}-%{version}.tar.gz
 # Source0-md5:	ef1789496a616c2ed443b540707e446c
 #Source1:	http://newsy.media-com.com.pl/scripts2/server-script/fetcher
 Source1:	fetcher
-# Source1-md5:	4cf8e4b50827ad3930abdb285665bd60
 # taken and rpm2cpioed from http://www.media-com.com.pl/~radecki/scripts/feeder-0.99-pre6.src.rpm
 Source2:	feeder-%{oldver}.tar.gz
 # Source2-md5:	202e4317dcd98b793dfcf12c0ffcc855
