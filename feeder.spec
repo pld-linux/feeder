@@ -3,19 +3,20 @@ Summary:	Support for compressed usenet feeds
 Summary(pl):	Obs³uga feedu kompresowanych newsów
 Name:		feeder
 Version:	2.1.4
-Release:	5
+%define	oldver	0.99
+Release:	6
 License:	GPL
 Vendor:		feed-pl@egroups.com /subscription required or own server/
 Group:		Applications/News
 Source0:	http://newsy.media-com.com.pl/scripts2/%{name}-%{version}.tar.gz
 Source1:	http://newsy.media-com.com.pl/scripts2/server-script/fetcher
 # taken and rpm2cpioed from http://www.media-com.com.pl/~radecki/scripts/feeder-0.99-pre6.src.rpm
-Source2:	feeder-0.99.tar.gz
+Source2:	feeder-%{oldver}.tar.gz
 # taken from http://newsy.karnet.pl/, currently unused
 #Source3:	%{name}-sd
 #Source4:	%{name}-sd.conf
 URL:		http://newsy.media-com.com.pl/
-Patch0:		%{name}-0.99-url_n_notermcap.patch
+Patch0:		%{name}-%{oldver}-url_n_notermcap.patch
 BuildRequires:	rpm-perlprov >= 3.0.3-16
 BuildArch:	noarch
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
@@ -46,6 +47,8 @@ ich klientom.
 %package old
 Summary:	Support for compressed usenet feeds - old unauthorizing client
 Summary(pl):	Obs³uga feedu kompresowanych newsów - stary nie autoryzuj±cy siê klient
+Version:	%{oldver}
+Epoch:		1
 Requires:	perl
 Group:		Applications/News
 
@@ -73,6 +76,8 @@ dodana do pliku grups.
 %package old-ppp
 Summary:	Automagic get-news on ppp-up
 Summary(pl):	Automagiczne pobieranie paczek po podniesieniu ppp
+Version:	%{oldver}
+Epoch:		1
 Group:		Applications/News
 Requires:	/usr/bin/suckem_perl
 Requires:	/usr/bin/feed2inn
@@ -103,16 +108,16 @@ install usr/local/share/man/pl/man5/* $RPM_BUILD_ROOT%{_mandir}/pl/man5
 install usr/local/share/man/pl/man7/* $RPM_BUILD_ROOT%{_mandir}/pl/man7
 install var/spool/feeder2/* $RPM_BUILD_ROOT%{_var}/spool/%{name}2
 
-install feeder-0.99/usr/bin/feed2inn $RPM_BUILD_ROOT%{_bindir}/ofeeder-0.99/usr/bin/feed2inn
-install feeder-0.99/usr/bin/feed2slrnpull_a $RPM_BUILD_ROOT%{_bindir}/ofeed2slrnpull_a
-install feeder-0.99/usr/bin/feed2slrnpull_b $RPM_BUILD_ROOT%{_bindir}/feed2slrnpull_b
-install feeder-0.99/usr/bin/news.put $RPM_BUILD_ROOT%{_bindir}/onews.put
-install feeder-0.99/usr/bin/news.send $RPM_BUILD_ROOT%{_bindir}/onews.send 
-install feeder-0.99/usr/bin/suckem_perl $RPM_BUILD_ROOT%{_bindir}/osuckem_perl
-install feeder-0.99/usr/bin/suckem_sh $RPM_BUILD_ROOT%{_bindir}/osuckem_sh
+install feeder-%{oldver}/usr/bin/feed2inn $RPM_BUILD_ROOT%{_bindir}/ofeed2inn
+install feeder-%{oldver}/usr/bin/feed2slrnpull_a $RPM_BUILD_ROOT%{_bindir}/ofeed2slrnpull_a
+install feeder-%{oldver}/usr/bin/feed2slrnpull_b $RPM_BUILD_ROOT%{_bindir}/ofeed2slrnpull_b
+install feeder-%{oldver}/usr/bin/news.put $RPM_BUILD_ROOT%{_bindir}/onews.put
+install feeder-%{oldver}/usr/bin/news.send $RPM_BUILD_ROOT%{_bindir}/onews.send 
+install feeder-%{oldver}/usr/bin/suckem_perl $RPM_BUILD_ROOT%{_bindir}/osuckem_perl
+install feeder-%{oldver}/usr/bin/suckem_sh $RPM_BUILD_ROOT%{_bindir}/osuckem_sh
 
-install %{name}-0.99/var/spool/news/feeder/last $RPM_BUILD_ROOT%{_var}/spool/%{name}
-install %{name}-0.99/var/spool/news/feeder/grupy $RPM_BUILD_ROOT%{_var}/spool/%{name}/groups
+install %{name}-%{oldver}/var/spool/news/feeder/last $RPM_BUILD_ROOT%{_var}/spool/%{name}
+install %{name}-%{oldver}/var/spool/news/feeder/grupy $RPM_BUILD_ROOT%{_var}/spool/%{name}/groups
 
 cat << EOF >> $RPM_BUILD_ROOT%{_var}/spool/%{name}/groups
 pld.betatesters 0
@@ -142,7 +147,8 @@ rm -rf $RPM_BUILD_ROOT
 %files
 %defattr(644,root,root,755)
 %doc ChangeLog README
-%attr(755,root,root) %{_bindir}/*
+%attr(755,root,root) %{_bindir}/feed2*
+%attr(755,root,root) %{_bindir}/get-news
 %{perl_sitelib}/Feeder
 %attr(660,root,news) %config(noreplace) %verify(not md5 size mtime) %{_sysconfdir}/%{name}.conf
 %attr(755,news,news) %dir %{_var}/spool/%{name}2
@@ -158,21 +164,20 @@ rm -rf $RPM_BUILD_ROOT
 
 %files old
 %defattr(644,root,root,755)
-%doc feeder-0.99/TODO
-%attr(755,root,root) %{_bindir}/feed2inn
-%attr(755,root,root) %{_bindir}/feed2slrnpull_a
-%attr(755,root,root) %{_bindir}/feed2slrnpull_b
-%attr(755,root,root) %{_bindir}/news.put
-%attr(755,root,root) %{_bindir}/news.send
-%attr(755,root,root) %{_bindir}/suckem_perl
-%attr(755,root,root) %{_bindir}/suckem_sh
+%doc feeder-%{oldver}/TODO
+%attr(755,root,root) %{_bindir}/ofeed2inn
+%attr(755,root,root) %{_bindir}/ofeed2slrnpull_a
+%attr(755,root,root) %{_bindir}/ofeed2slrnpull_b
+%attr(755,root,root) %{_bindir}/onews.put
+%attr(755,root,root) %{_bindir}/onews.send
+%attr(755,root,root) %{_bindir}/osuckem_perl
+%attr(755,root,root) %{_bindir}/osuckem_sh
 %attr(755,news,news) %dir %{_var}/spool/%{name}
 %attr(2775,news,news) %dir %{_var}/spool/%{name}/old
 %attr(2775,news,news) %dir %{_var}/spool/%{name}/received
 %attr(2775,news,news) %dir %{_var}/spool/%{name}/tmp
 %attr(664,news,news) %config(noreplace) %verify(not md5 size mtime) %{_var}/spool/%{name}/groups
 %attr(664,news,news) %config(noreplace) %verify(not md5 size mtime) %{_var}/spool/%{name}/last
-%lang(pl) %{_mandir}/pl/man?/*
 
 %files old-ppp
 %attr(755,root,root) %config(noreplace) %verify(not md5 size mtime) /etc/sysconfig/interfaces/up.d/ppp/feeder
