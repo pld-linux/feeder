@@ -2,17 +2,15 @@
 Summary:	Support for compressed usenet feeds
 Summary(pl):	Obs³uga feedu kompresowanych newsów
 Name:		feeder
-Version:	2.1.3
-Release:	3
+Version:	2.1.4
+Release:	1
 License:	GPL
 Vendor:		feed-pl@egroups.com /subscription required/
 Group:		Applications/System
 Group(de):	Applikationen/System
 Group(pl):	Aplikacje/System
-Source0:	http://newsy.media-com.com.pl/scripts2/%{name}-%{version}.tar.gz
 URL:		http://newsy.media-com.com.pl/
-BuildRequires:	perl-devel
-BuildRequires:	perl-News-NNTPClient
+Source0:	http://newsy.media-com.com.pl/scripts2/%{name}-%{version}.tar.gz
 BuildRequires:	rpm-perlprov >= 3.0.3-16
 BuildArch:	noarch
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
