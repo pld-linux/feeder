@@ -1,0 +1,216 @@
+#!/usr/bin/perl -w
+#
+# 21.8.2000r (C) Andrzej Radecki
+#
+# Skrypt objêty licencj± GPL (General Public License)
+#
+
+
+use CGI;
+use CGI::Carp qw(fatalsToBrowser set_message);
+use strict;
+
+BEGIN {
+	sub handle_errors {
+		my $msg = shift;
+		if ($msg =~ /POSTs are limited to/) {
+			print "Zbyt du¿y killfile\n"
+		} else {print "Ooops.. czy¿by jaki¶ b³±d w skrypcie?\n$msg\n"}
+	}
+	set_message(\&handle_errors);
+}
+
+use Fcntl ':flock';
+
+$CGI::POST_MAX=20000;
+#$CGI::DISABLE_UPLOADS=1;
+my $q = new CGI;
+my $ident = "../ident"; #to musi byæ w bezpiecznym miejscu
+my $log_file = "../log";
+my $redirect = 'http://localhost';
+my $zip = '/usr/bin/zip';
+my $gzip = '/usr/bin/gzip';
+my $bzip2 = '/usr/bin/bzip2';
+my ($login_name, $pass, $compress, $uploaded_file, $debug);
+my (%groups, %crossposts, @messages, %killfile);
+
+
+loguj();
+parametry();
+if (autoryzuj()) {pobierz_newsy()}
+
+
+
+
+sub parametry {
+#	my ($blok, @tmp, $newsgroups, $old);
+
+	if ($q->param('compress')) {$compress = $q->param('compress'); $compress =~ s/\/$//;}
+	else {$compress = 'bzip2'}
+	if ($q->param('user')) {$login_name = $q->param('user'); $login_name =~ s/\/$//;}
+	if ($q->param('pass')) {$pass = $q->param('pass'); $pass =~ s/\/$//;}
+	if ($q->param('debug')) {$debug = $q->param('debug'); $debug =~ s/\/$//;}
+	else {$debug = 'yes'}
+
+	my @groups = grep(/^count-.+/, $q->param());
+#	print @groups, "\n";
+	%groups = map { /^count-(.+)/; $1 => $q->param($_); } @groups;
+#	print keys(%groups),' ', values(%groups), "\n";
+	if ($q->param('killfile')) {$uploaded_file = $q->param('killfile'); $uploaded_file =~ s/\/$//;}
+	return if ($login_name eq 'test' || !defined($uploaded_file)); #ograniczenie dla anonimów
+
+	
+	#parsujemy killfile
+	
+	my $newsgroups = 'default';
+	while (<$uploaded_file>) {
+		m/\r?\n?$/ || next; #obciêta ostatnia linia?
+		s/\r?\n?$//; #usuwamy znaki koñca linii
+		next if /^$/;
+		next if /^\s*#/;
+		s#/#\\/#g;   #eskejpujemy '/'
+		s/([\$\@\%])(?=.+)/\\$1/g; #j.w. ale $zmienna, @zmienna, %zmienna
+		s/\(\?.+?\)/$1/g; #wycinamy wszelkie rozszerzenia regexpów
+
+#		push @messages, "$.: $_" if ($debug eq 'yes');
+		if (/^\[([a-z0-9\.+-]+)\]/) {$newsgroups = $1; next;}
+		if (/^(-?\d+):([\w_-]+?):(.+)/) {push @{$killfile{$newsgroups}}, [$1, $2, $3]; next;}
+		else {push @messages, "Syntax error in killfile (line $.)"; last;}
+	}
+	
+	if ($debug eq 'yes') {
+		foreach my $grupa (keys (%killfile)) {
+			foreach my $regulka (@{$killfile{$grupa}}) {
+				my $tmp = join (':', @{$regulka});
+				push @messages, "$grupa\t$tmp";
+			}
+		}
+	}
+}
+
+sub pobierz_newsy {
+	use News::NNTPClient;
+	my $c = new News::NNTPClient("localhost"); #, "", 2);
+
+	my ($first, $last);
+	my $nr;
+	my ($headers, $tmp);
+	my %headers;
+	$c->mode_reader();
+	*WYJSCIE = *STDOUT;
+	for (my $i=0; $i < scalar(@messages); $i++) {
+		print WYJSCIE "X-Notice-$i: $messages[$i]\r\n";
+	}
+#	print WYJSCIE "X-Notice-1: test\r\n";
+	if ($compress eq 'bzip2') {
+		print WYJSCIE $q->header(-type=>"application/octet-stream", "Content-Disposition"=>"filename=paczka.bz2");
+		open (WYJSCIE, "| $bzip2 -5");
+	} elsif ($compress eq 'gzip') {
+		print WYJSCIE $q->header(-type=>"application/octet-stream", "Content-Disposition"=>"filename=paczka.gz");
+		open (WYJSCIE, "| $gzip -9q");
+	} elsif ($compress eq 'zip') {
+		print WYJSCIE $q->header(-type=>"application/octet-stream", "Content-Disposition"=>"filename=paczka.zip");
+		open (WYJSCIE, "| $zip -9q");
+	} else { print WYJSCIE $q->header(-type=>"application/octet-stream", "Content-Disposition"=>"filename=paczka.txt")}
+
+	my $count = 0;
+	foreach my $grupa (keys (%groups)) {
+		$nr = $groups{$grupa};
+		($first, $last) = ($c->group($grupa));
+
+		if ($nr =~ /^\-(\d+)/) { $nr = $last - $1 }
+		if ($nr < $first) { $nr = $first }
+		$nr++;
+#		print "$first $last $nr \n";
+
+ 		for (; $nr <= $last; $nr++) {
+			$c->{CMND} = "fetchbinary";
+			$headers = $c->command("HEAD $nr")."\015\012\015\012";
+			if ($c->ok()) {
+				$tmp = $headers;
+				$tmp =~ s/\015?\012\s+/ /g; #scalamy wieloliniowe naglowki
+				%headers = map { /^(.+?): (.*)$/; $1 => $2; } split (/\015?\012/, $tmp);
+				if (!killarticle(%headers)) {
+					print (WYJSCIE $headers);
+					$c->{CMND} = "fetchbinary";
+					print (WYJSCIE $c->command("BODY $nr"), "\015\012.\015\012");
+					$count++;
+					exit if (($login_name eq 'test') && ($count >= 50)); #ograniczenie dla anonimów
+				}
+			}
+		}
+	}
+	close (WYJSCIE);
+};
+
+sub killarticle {
+	my %hdrs = @_;
+
+#eliminacja powielania crosspostow przy sciaganiu; %hdrs - hash naglowkow
+	if (scalar(my @tmp = split (/ /, $hdrs{'Xref'})) > 2) {
+#	print "Xref: ", $hdrs{'Xref'}, scalar(@tmp = split (/ /, $hdrs{'Xref'})),"\n";
+		if (defined($crossposts{$hdrs{'Message-ID'}})) {return 1} #mamy powtórzony crosspost
+		else {$crossposts{$hdrs{'Message-ID'}} = 1}
+	}
+	return if ($login_name eq 'test'); #ograniczenie dla anonimów
+
+#sprawdzanie killfile'a:
+
+
+	my $count = 0;
+	foreach my $grupa (split (/,/, $hdrs{'Newsgroups'})) {
+		if (defined($killfile{$grupa})) {
+			foreach my $regulka (@{$killfile{$grupa}}) {
+#			print "   ", join('::', @{$regulka}),"->@{$regulka}[2]\n";
+				if ($hdrs{@{$regulka}[1]} =~ /@{$regulka}[2]/i) {$count += @{$regulka}[0]};
+			}
+		}
+	}
+	if (defined($killfile{'default'})) {
+		foreach my $regulka (@{$killfile{'default'}}) {
+#		print "   ", join('::', @{$regulka}),"\n";
+			if ($hdrs{@{$regulka}[1]} =~ /@{$regulka}[2]/i) {$count += @{$regulka}[0]};
+		}
+	}
+	return 1 if ($count < 0);
+#	print "$count\r\n";
+	return;
+	
+}
+
+
+
+sub autoryzuj {
+	open IDENT, $ident;
+	flock IDENT, LOCK_EX;
+	my @jest = grep ((/^$login_name/o), <IDENT>);
+	flock IDENT, LOCK_UN;
+	close IDENT;
+
+	if (@jest) { 
+		if (($jest[0] =~ /^(.+) (\S+)$/) && ($2 eq crypt ($pass, $2))) {return 1};
+		$q->delete_all();
+		print $q->redirect($redirect);
+		exit;
+	};
+	if (! ($login_name) || ($login_name ne 'test')) {
+		$q->delete_all();
+		print $q->redirect($redirect);
+		exit;
+	};
+	return 1;
+
+};
+
+sub loguj {
+	local $|=1;
+	open(LOG, ">> $log_file");
+	flock LOG, LOCK_EX;
+	print LOG scalar(localtime(time)), "\t";#, join("\t",sort(grep(!/pass/, $q->param()))),"\n";
+	foreach my $k (grep(!/^pass$/, $q->param())) {
+		print LOG "$k=", $q->param($k), " ";
+	}
+	print LOG "\n";
+	flock LOG, LOCK_UN;
+	close LOG;
+}
