@@ -93,7 +93,7 @@ Ten pakiet automagicznie ¶ci±gnie paczki po ppp-up.
 
 %install
 rm -rf $RPM_BUILD_ROOT
-install -d $RPM_BUILD_ROOT%{_sysconfdir}/sysconfig/interfaces/up.d/ppp \
+install -d $RPM_BUILD_ROOT/etc/sysconfig/interfaces/up.d/ppp \
 	$RPM_BUILD_ROOT{%{_bindir},%{_sbindir},%{perl_sitelib}/Feeder} \
 	$RPM_BUILD_ROOT%{_mandir}/pl/man{1,5,7} \
 	$RPM_BUILD_ROOT%{_var}/spool/{%{name}2,%{name}}/{archive,received,old,tmp}
