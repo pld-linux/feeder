@@ -54,6 +54,10 @@ A set of client scripts for downloading compressed newsfeed and
 transfering it to a local (proxy)newsserver, this one does not require
 authorizing with server, but it only downloads articles, you need some
 nttp utilities to post news. (rpost might be good start)
+NOTE: binaries have been prefixed with sigle 'o' character for 
+distinguishing from new feeder.
+NOTE2: the pld.* hierarchy from news.wsisiz.edu.pl is automagicly added 
+to groups file.
 
 %description old -l pl
 Zestaw skryptów klienckich do ¶ci±gania i transferu do lokalnego
@@ -61,6 +65,10 @@ newsserwera; skrypty te nie wymagaj± autoryzacji z serwerem news, ale
 nie umo¿liwiaj± wysy³ania artyku³ów; konieczne s± dodatkowe narzêdzia,
 aby wysy³aæ artyku³y do zdalnych serwerów (rpost mo¿e byæ dobrym
 pocz±tkiem).
+UWAGA: przez nazwami skryptów wykonywalnych dodano literkê 'o' aby
+rozró¿niæ nowy feeder od starego.
+UWAGA2: hierarchia grup pld.* z news.wsisiz.edu.pl zosta³a automagicznie 
+dodana do pliku grups.
 
 %package old-ppp
 Summary:	Automagic get-news on ppp-up
@@ -95,14 +103,35 @@ install usr/local/share/man/pl/man5/* $RPM_BUILD_ROOT%{_mandir}/pl/man5
 install usr/local/share/man/pl/man7/* $RPM_BUILD_ROOT%{_mandir}/pl/man7
 install var/spool/feeder2/* $RPM_BUILD_ROOT%{_var}/spool/%{name}2
 
-install %{name}-0.99/usr/bin/* $RPM_BUILD_ROOT%{_bindir}
+install feeder-0.99/usr/bin/feed2inn $RPM_BUILD_ROOT%{_bindir}/ofeeder-0.99/usr/bin/feed2inn
+install feeder-0.99/usr/bin/feed2slrnpull_a $RPM_BUILD_ROOT%{_bindir}/ofeed2slrnpull_a
+install feeder-0.99/usr/bin/feed2slrnpull_b $RPM_BUILD_ROOT%{_bindir}/feed2slrnpull_b
+install feeder-0.99/usr/bin/news.put $RPM_BUILD_ROOT%{_bindir}/onews.put
+install feeder-0.99/usr/bin/news.send $RPM_BUILD_ROOT%{_bindir}/onews.send 
+install feeder-0.99/usr/bin/suckem_perl $RPM_BUILD_ROOT%{_bindir}/osuckem_perl
+install feeder-0.99/usr/bin/suckem_sh $RPM_BUILD_ROOT%{_bindir}/osuckem_sh
+
 install %{name}-0.99/var/spool/news/feeder/last $RPM_BUILD_ROOT%{_var}/spool/%{name}
 install %{name}-0.99/var/spool/news/feeder/grupy $RPM_BUILD_ROOT%{_var}/spool/%{name}/groups
+
+cat << EOF >> $RPM_BUILD_ROOT%{_var}/spool/%{name}/groups
+pld.betatesters 0
+pld.cvs.commit 40229
+pld.devel.en 909
+pld.devel.pl 26102
+pld.discuss.pl 125
+pld.installer 1851
+pld.kernel 393
+pld.rc.scripts 78
+pld.users.en 126
+pld.users.pl 11628
+pld.www 19
+EOF
 
 cat << EOF > $RPM_BUILD_ROOT/etc/sysconfig/interfaces/up.d/ppp/feeder
 #!/bin/sh
 
-( ( sleep 15; /usr/bin/suckem_perl -q ; /usr/bin/feed2inn -a ) 2>&1 | mail \
+( ( sleep 15; /usr/bin/osuckem_perl -q ; /usr/bin/ofeed2inn -a ) 2>&1 | mail \
 -s "feeder ppp-on, started on $(date)" news ) &
 
 EOF
