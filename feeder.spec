@@ -6,19 +6,13 @@ Version:	2.1.4
 Release:	3
 License:	GPL
 Vendor:		feed-pl@egroups.com /subscription required or own server/
-Group:		Applications/System
-URL:		http://newsy.media-com.com.pl/
+Group:		Applications/News
 Source0:	http://newsy.media-com.com.pl/scripts2/%{name}-%{version}.tar.gz
 Source1:	http://newsy.media-com.com.pl/scripts2/server-script/fetcher
+URL:		http://newsy.media-com.com.pl/
 BuildRequires:	rpm-perlprov >= 3.0.3-16
 BuildArch:	noarch
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
-
-%package server
-Summary:	Support for compressed usenet feeds - server side
-Summary(pl):	Obs³uga feedu kompresowanych newsów - skrypt serwerowy
-Requires:	perl-CGI
-Group:		Applications/System
 
 %description
 A set of client scripts for downloading compressed newsfeed and
@@ -28,6 +22,11 @@ transfering it to a local (proxy)newsserver.
 Zestaw skryptów klienckich do ¶ci±gania i transferu do lokalnego
 (proxy)newsserwera postów w kompresowanych paczkach.
 
+%package server
+Summary:	Support for compressed usenet feeds - server side
+Summary(pl):	Obs³uga feedu kompresowanych newsów - skrypt serwerowy
+Requires:	perl-CGI
+Group:		Applications/News
 
 %description server
 A set of server scripts for downloading compressed newsfeed and
@@ -57,14 +56,12 @@ install usr/local/share/man/pl/man5/* $RPM_BUILD_ROOT%{_mandir}/pl/man5
 install usr/local/share/man/pl/man7/* $RPM_BUILD_ROOT%{_mandir}/pl/man7
 install var/spool/feeder2/* $RPM_BUILD_ROOT%{_var}/spool/%{name}2
 
-gzip -9nf ChangeLog README
-
 %clean
 rm -rf $RPM_BUILD_ROOT
 
 %files
 %defattr(644,root,root,755)
-%doc *.gz
+%doc ChangeLog README
 %attr(755,root,root) %{_bindir}/*
 %{perl_sitelib}/Feeder
 %attr(660,root,news) %config(noreplace) %verify(not md5 size mtime) %{_sysconfdir}/%{name}.conf
