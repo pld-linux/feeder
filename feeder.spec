@@ -182,4 +182,5 @@ rm -rf $RPM_BUILD_ROOT
 %attr(664,news,news) %config(noreplace) %verify(not md5 size mtime) %{_var}/spool/%{name}/last
 
 %files old-ppp
+%defattr(644,root,root,755)
 %attr(755,root,root) %config(noreplace) %verify(not md5 size mtime) /etc/sysconfig/interfaces/up.d/ppp/feeder
