@@ -2,7 +2,7 @@ Summary:	Support for compressed usenet feeds
 Summary(pl):	Obs³uga feedu kompresowanych newsów
 Name:		feeder
 Version:	2.1.3
-Release:	1
+Release:	2
 License:	GPL
 Vendor:		feed-pl@egroups.com /subscription required/
 Group:		Applications/System
@@ -47,9 +47,9 @@ news(proxy)serwera postów w kompresowanych paczkach.
 %files
 %defattr(644,root,root,755)
 %doc *.gz
-%attr (755,root,root) %{_bindir}/*
+%attr(755,root,root) %{_bindir}/*
 %{_libdir}/perl5/site_perl/Feeder
-%attr (660,root,news) %config(noreplace) %verify(not md5 size mtime) %{_sysconfdir}/%{name}.conf
-%attr(news,news,755) %dir %{_var}/spool/%{name}2
-%attr(news,news,644) %config(noreplace) %verify(not md5 size mtime) %{_var}/spool/%{name}2/*
+%attr(660,root,news) %config(noreplace) %verify(not md5 size mtime) %{_sysconfdir}/%{name}.conf
+%attr(755,news,news) %dir %{_var}/spool/%{name}2
+%attr(664,news,news) %config(noreplace) %verify(not md5 size mtime) %{_var}/spool/%{name}2/*
 %lang(pl) %{_mandir}/pl/man?/*
