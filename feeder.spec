@@ -49,8 +49,8 @@ ich klientom.
 rm -rf $RPM_BUILD_ROOT
 install -d $RPM_BUILD_ROOT%{_sysconfdir} \
 	$RPM_BUILD_ROOT{%{_bindir},%{_sbindir},%{perl_sitelib}/Feeder} \
-	$RPM_BUILD_ROOT{%{_mandir}/pl/man{1,5,7}} \
-	$RPM_BUILD_ROOT{%{_var}/spool/%{name}2/{archive,received}}
+	$RPM_BUILD_ROOT%{_mandir}/pl/man{1,5,7} \
+	$RPM_BUILD_ROOT%{_var}/spool/%{name}2/{archive,received}
 
 install etc/feeder.conf $RPM_BUILD_ROOT%{_sysconfdir}
 install usr/lib/perl5/site_perl/Feeder/feeder.pm $RPM_BUILD_ROOT%{perl_sitelib}/Feeder
