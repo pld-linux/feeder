@@ -4,14 +4,16 @@ Summary(pl):	Obs³uga feedu kompresowanych newsów
 Name:		feeder
 Version:	2.1.4
 %define	oldver	0.99
-Release:	7
+Release:	8
 License:	GPL
 Vendor:		feed-pl@egroups.com /subscription required or own server/
 Group:		Applications/News
 Source0:	http://newsy.media-com.com.pl/scripts2/%{name}-%{version}.tar.gz
+# Source0-md5:	ef1789496a616c2ed443b540707e446c
 Source1:	http://newsy.media-com.com.pl/scripts2/server-script/fetcher
 # taken and rpm2cpioed from http://www.media-com.com.pl/~radecki/scripts/feeder-0.99-pre6.src.rpm
 Source2:	feeder-%{oldver}.tar.gz
+# Source2-md5:	202e4317dcd98b793dfcf12c0ffcc855
 # taken from http://newsy.karnet.pl/, currently unused
 #Source3:	%{name}-sd
 #Source4:	%{name}-sd.conf
