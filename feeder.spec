@@ -1,3 +1,4 @@
+%include	/usr/lib/rpm/macros.perl
 Summary:	Support for compressed usenet feeds
 Summary(pl):	Obs³uga feedu kompresowanych newsów
 Name:		feeder
@@ -10,8 +11,8 @@ Group(de):	Applikationen/System
 Group(pl):	Aplikacje/System
 Source0:	http://newsy.media-com.com.pl/scripts2/%{name}-%{version}.tar.gz
 URL:		http://newsy.media-com.com.pl/
-Requires:	perl-modules
-Requires:	perl-News-NNTPClient
+BuildRequires:	perl-devel
+BuildRequires:	perl-News-NNTPClient
 BuildArch:	noarch
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
