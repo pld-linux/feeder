@@ -61,8 +61,8 @@ authorizing with server, but it only downloads articles, you need some
 nttp utilities to post news. (rpost might be good start)
 NOTE: binaries have been prefixed with sigle 'o' character for
 distinguishing from new feeder.
-NOTE2: the pld.* hierarchy from news.wsisiz.edu.pl is automagicly added
-to groups file.
+NOTE2: the pld.* hierarchy from news.wsisiz.edu.pl is automagically
+added to groups file.
 
 %description old -l pl
 Zestaw skryptów klienckich do ¶ci±gania i transferu do lokalnego
@@ -72,8 +72,8 @@ aby wysy³aæ artyku³y do zdalnych serwerów (rpost mo¿e byæ dobrym
 pocz±tkiem).
 UWAGA: przez nazwami skryptów wykonywalnych dodano literkê 'o' aby
 rozró¿niæ nowy feeder od starego.
-UWAGA2: hierarchia grup pld.* z news.wsisiz.edu.pl zosta³a automagicznie
-dodana do pliku grups.
+UWAGA2: hierarchia grup pld.* z news.wsisiz.edu.pl zosta³a
+automagicznie dodana do pliku groups.
 
 %package old-ppp
 Summary:	Automagic get-news on ppp-up
