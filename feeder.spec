@@ -4,7 +4,7 @@ Summary(pl):	Obs³uga feedu kompresowanych newsów
 Name:		feeder
 Version:	2.1.4
 %define	oldver	0.99
-Release:	9
+Release:	10
 License:	GPL
 Group:		Applications/News
 #Source0:	http://newsy.media-com.com.pl/scripts2/%{name}-%{version}.tar.gz
@@ -81,7 +81,7 @@ Summary(pl):	Automagiczne pobieranie paczek po podniesieniu ppp
 Version:	%{oldver}
 Epoch:		1
 Group:		Applications/News
-Requires:	%{name}-old = %{oldver}
+Requires:	%{name}-old = 1:%{oldver}
 
 %description old-ppp
 This will automagically fetch news after ppp-up.
