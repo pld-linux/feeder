@@ -11,6 +11,7 @@ Group(de):	Applikationen/System
 Group(pl):	Aplikacje/System
 URL:		http://newsy.media-com.com.pl/
 Source0:	http://newsy.media-com.com.pl/scripts2/%{name}-%{version}.tar.gz
+Source1:	http://newsy.media-com.com.pl/scripts2/server-script/fetcher
 BuildRequires:	rpm-perlprov >= 3.0.3-16
 BuildArch:	noarch
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
@@ -35,6 +36,7 @@ install -d $RPM_BUILD_ROOT%{_sysconfdir} \
 install etc/feeder.conf $RPM_BUILD_ROOT%{_sysconfdir}
 install usr/lib/perl5/site_perl/Feeder/feeder.pm $RPM_BUILD_ROOT%{perl_sitelib}/Feeder
 install usr/local/bin/* $RPM_BUILD_ROOT%{_bindir}
+install %{SOURCE1} $RPM_BUILD_ROOT%{_bindir}
 install usr/local/share/man/pl/man1/* $RPM_BUILD_ROOT%{_mandir}/pl/man1
 install usr/local/share/man/pl/man5/* $RPM_BUILD_ROOT%{_mandir}/pl/man5
 install usr/local/share/man/pl/man7/* $RPM_BUILD_ROOT%{_mandir}/pl/man7
