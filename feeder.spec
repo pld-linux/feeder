@@ -93,12 +93,12 @@ Ten pakiet automagicznie ¶ci±gnie paczki po ppp-up.
 %install
 rm -rf $RPM_BUILD_ROOT
 install -d $RPM_BUILD_ROOT/etc/sysconfig/interfaces/up.d/ppp \
-	$RPM_BUILD_ROOT{%{_bindir},%{_sbindir},%{perl_sitelib}/Feeder} \
+	$RPM_BUILD_ROOT{%{_bindir},%{_sbindir},%{perl_vendorlib}/Feeder} \
 	$RPM_BUILD_ROOT%{_mandir}/pl/man{1,5,7} \
 	$RPM_BUILD_ROOT%{_var}/spool/{%{name}2,%{name}}/{archive,received,old,tmp}
 
 install etc/feeder.conf $RPM_BUILD_ROOT%{_sysconfdir}
-install usr/lib/perl5/site_perl/Feeder/feeder.pm $RPM_BUILD_ROOT%{perl_sitelib}/Feeder
+install usr/lib/perl5/site_perl/Feeder/feeder.pm $RPM_BUILD_ROOT%{perl_vendorlib}/Feeder
 install usr/local/bin/* $RPM_BUILD_ROOT%{_bindir}
 install %{SOURCE1} $RPM_BUILD_ROOT%{_sbindir}
 install usr/local/share/man/pl/man1/* $RPM_BUILD_ROOT%{_mandir}/pl/man1
@@ -147,7 +147,7 @@ rm -rf $RPM_BUILD_ROOT
 %doc ChangeLog README
 %attr(755,root,root) %{_bindir}/feed2*
 %attr(755,root,root) %{_bindir}/get-news
-%{perl_sitelib}/Feeder
+%{perl_vendorlib}/Feeder
 %attr(660,root,news) %config(noreplace) %verify(not md5 size mtime) %{_sysconfdir}/%{name}.conf
 %attr(755,news,news) %dir %{_var}/spool/%{name}2
 %attr(2775,news,news) %dir %{_var}/spool/%{name}2/archive
