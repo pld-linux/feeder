@@ -4,21 +4,24 @@ Summary(pl):	Obs³uga feedu kompresowanych newsów
 Name:		feeder
 Version:	2.1.4
 %define	oldver	0.99
-Release:	8
+Release:	9
 License:	GPL
 Group:		Applications/News
-Source0:	http://newsy.media-com.com.pl/scripts2/%{name}-%{version}.tar.gz
+#Source0:	http://newsy.media-com.com.pl/scripts2/%{name}-%{version}.tar.gz
+Source0:	%{name}-%{version}.tar.gz
 # Source0-md5:	ef1789496a616c2ed443b540707e446c
-Source1:	http://newsy.media-com.com.pl/scripts2/server-script/fetcher
-# Source1-md5:	53e2ba461f6eab95fca3e511cac9357b
+#Source1:	http://newsy.media-com.com.pl/scripts2/server-script/fetcher
+Source1:	fetcher
+# Source1-md5:	4cf8e4b50827ad3930abdb285665bd60
 # taken and rpm2cpioed from http://www.media-com.com.pl/~radecki/scripts/feeder-0.99-pre6.src.rpm
 Source2:	feeder-%{oldver}.tar.gz
 # Source2-md5:	202e4317dcd98b793dfcf12c0ffcc855
 # taken from http://newsy.karnet.pl/, currently unused
 #Source3:	%{name}-sd
 #Source4:	%{name}-sd.conf
-URL:		http://newsy.media-com.com.pl/
+#URL:		http://newsy.media-com.com.pl/
 Patch0:		%{name}-%{oldver}-url_n_notermcap.patch
+Patch1:		%{name}-next.patch
 BuildRequires:	rpm-perlprov >= 3.0.3-16
 BuildArch:	noarch
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
@@ -89,7 +92,8 @@ Ten pakiet automagicznie ¶ci±gnie paczki po ppp-up.
 
 %prep
 %setup -q -a2
-%patch -p0
+%patch0 -p0
+%patch1 -p1
 
 %install
 rm -rf $RPM_BUILD_ROOT
