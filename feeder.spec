@@ -3,7 +3,7 @@ Summary:	Support for compressed usenet feeds
 Summary(pl):	Obs³uga feedu kompresowanych newsów
 Name:		feeder
 Version:	2.1.4
-Release:	3
+Release:	4
 License:	GPL
 Vendor:		feed-pl@egroups.com /subscription required or own server/
 Group:		Applications/News
