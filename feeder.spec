@@ -13,6 +13,7 @@ Source0:	http://newsy.media-com.com.pl/scripts2/%{name}-%{version}.tar.gz
 URL:		http://newsy.media-com.com.pl/
 BuildRequires:	perl-devel
 BuildRequires:	perl-News-NNTPClient
+BuildRequires:	rpm-perlprov >= 3.0.3-16
 BuildArch:	noarch
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
@@ -30,11 +31,11 @@ news(proxy)serwera postów w kompresowanych paczkach.
 %install
 %{__rm} -rf $RPM_BUILD_ROOT
 %{__install} -d $RPM_BUILD_ROOT%{_sysconfdir} \
-	$RPM_BUILD_ROOT{%{_bindir},%{_libdir}/perl5/site_perl/Feeder} \
+	$RPM_BUILD_ROOT{%{_bindir},%{perl_sitelib}/Feeder} \
 	$RPM_BUILD_ROOT{%{_mandir}/pl/man{1,5,7},%{_var}/spool/%{name}2}
 
 %{__install} etc/feeder.conf $RPM_BUILD_ROOT%{_sysconfdir}
-%{__install} usr/lib/perl5/site_perl/Feeder/feeder.pm $RPM_BUILD_ROOT%{_libdir}/perl5/site_perl/Feeder
+%{__install} usr/lib/perl5/site_perl/Feeder/feeder.pm $RPM_BUILD_ROOT%{perl_sitelib}/Feeder
 %{__install} usr/local/bin/* $RPM_BUILD_ROOT%{_bindir}
 %{__install} usr/local/share/man/pl/man1/* $RPM_BUILD_ROOT%{_mandir}/pl/man1
 %{__install} usr/local/share/man/pl/man5/* $RPM_BUILD_ROOT%{_mandir}/pl/man5
@@ -50,7 +51,7 @@ news(proxy)serwera postów w kompresowanych paczkach.
 %defattr(644,root,root,755)
 %doc *.gz
 %attr(755,root,root) %{_bindir}/*
-%{_libdir}/perl5/site_perl/Feeder
+%{perl_sitelib}/Feeder
 %attr(660,root,news) %config(noreplace) %verify(not md5 size mtime) %{_sysconfdir}/%{name}.conf
 %attr(755,news,news) %dir %{_var}/spool/%{name}2
 %attr(664,news,news) %config(noreplace) %verify(not md5 size mtime) %{_var}/spool/%{name}2/*
