@@ -6,7 +6,6 @@ Version:	2.1.4
 %define	oldver	0.99
 Release:	7
 License:	GPL
-Vendor:		feed-pl@egroups.com /subscription required or own server/
 Group:		Applications/News
 Source0:	http://newsy.media-com.com.pl/scripts2/%{name}-%{version}.tar.gz
 Source1:	http://newsy.media-com.com.pl/scripts2/server-script/fetcher
