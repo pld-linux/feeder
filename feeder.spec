@@ -3,7 +3,7 @@ Summary:	Support for compressed usenet feeds
 Summary(pl):	Obs³uga feedu kompresowanych newsów
 Name:		feeder
 Version:	2.1.4
-Release:	2
+Release:	3
 License:	GPL
 Vendor:		feed-pl@egroups.com /subscription required or own server/
 Group:		Applications/System
@@ -77,4 +77,4 @@ rm -rf $RPM_BUILD_ROOT
 
 %files server
 %defattr(644,root,root,755)
-%attr(755,news,news) %{_sbindir}
+%attr(755,news,news) %{_sbindir}/*
