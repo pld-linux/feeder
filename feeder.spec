@@ -3,7 +3,7 @@ Summary:	Support for compressed usenet feeds
 Summary(pl):	Obs³uga feedu kompresowanych newsów
 Name:		feeder
 Version:	2.1.4
-Release:	1
+Release:	2
 License:	GPL
 Vendor:		feed-pl@egroups.com /subscription required or own server/
 Group:		Applications/System
@@ -49,7 +49,8 @@ ich klientom.
 rm -rf $RPM_BUILD_ROOT
 install -d $RPM_BUILD_ROOT%{_sysconfdir} \
 	$RPM_BUILD_ROOT{%{_bindir},%{_sbindir},%{perl_sitelib}/Feeder} \
-	$RPM_BUILD_ROOT{%{_mandir}/pl/man{1,5,7},%{_var}/spool/%{name}2}
+	$RPM_BUILD_ROOT{%{_mandir}/pl/man{1,5,7}} \
+	$RPM_BUILD_ROOT{%{_var}/spool/%{name}2/{archive,received}}
 
 install etc/feeder.conf $RPM_BUILD_ROOT%{_sysconfdir}
 install usr/lib/perl5/site_perl/Feeder/feeder.pm $RPM_BUILD_ROOT%{perl_sitelib}/Feeder
@@ -72,7 +73,10 @@ rm -rf $RPM_BUILD_ROOT
 %{perl_sitelib}/Feeder
 %attr(660,root,news) %config(noreplace) %verify(not md5 size mtime) %{_sysconfdir}/%{name}.conf
 %attr(755,news,news) %dir %{_var}/spool/%{name}2
-%attr(664,news,news) %config(noreplace) %verify(not md5 size mtime) %{_var}/spool/%{name}2/*
+%attr(2775,news,news) %dir %{_var}/spool/%{name}2/archive
+%attr(2775,news,news) %dir %{_var}/spool/%{name}2/received
+%attr(664,news,news) %config(noreplace) %verify(not md5 size mtime) %{_var}/spool/%{name}2/groups
+%attr(664,news,news) %config(noreplace) %verify(not md5 size mtime) %{_var}/spool/%{name}2/killfile
 %lang(pl) %{_mandir}/pl/man?/*
 
 %files server
