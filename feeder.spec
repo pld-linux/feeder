@@ -59,9 +59,9 @@ A set of client scripts for downloading compressed newsfeed and
 transfering it to a local (proxy)newsserver, this one does not require
 authorizing with server, but it only downloads articles, you need some
 nttp utilities to post news. (rpost might be good start)
-NOTE: binaries have been prefixed with sigle 'o' character for 
+NOTE: binaries have been prefixed with sigle 'o' character for
 distinguishing from new feeder.
-NOTE2: the pld.* hierarchy from news.wsisiz.edu.pl is automagicly added 
+NOTE2: the pld.* hierarchy from news.wsisiz.edu.pl is automagicly added
 to groups file.
 
 %description old -l pl
@@ -72,7 +72,7 @@ aby wysy³aæ artyku³y do zdalnych serwerów (rpost mo¿e byæ dobrym
 pocz±tkiem).
 UWAGA: przez nazwami skryptów wykonywalnych dodano literkê 'o' aby
 rozró¿niæ nowy feeder od starego.
-UWAGA2: hierarchia grup pld.* z news.wsisiz.edu.pl zosta³a automagicznie 
+UWAGA2: hierarchia grup pld.* z news.wsisiz.edu.pl zosta³a automagicznie
 dodana do pliku grups.
 
 %package old-ppp
@@ -114,7 +114,7 @@ install feeder-%{oldver}/usr/bin/feed2inn $RPM_BUILD_ROOT%{_bindir}/ofeed2inn
 install feeder-%{oldver}/usr/bin/feed2slrnpull_a $RPM_BUILD_ROOT%{_bindir}/ofeed2slrnpull_a
 install feeder-%{oldver}/usr/bin/feed2slrnpull_b $RPM_BUILD_ROOT%{_bindir}/ofeed2slrnpull_b
 install feeder-%{oldver}/usr/bin/news.put $RPM_BUILD_ROOT%{_bindir}/onews.put
-install feeder-%{oldver}/usr/bin/news.send $RPM_BUILD_ROOT%{_bindir}/onews.send 
+install feeder-%{oldver}/usr/bin/news.send $RPM_BUILD_ROOT%{_bindir}/onews.send
 install feeder-%{oldver}/usr/bin/suckem_perl $RPM_BUILD_ROOT%{_bindir}/osuckem_perl
 install feeder-%{oldver}/usr/bin/suckem_sh $RPM_BUILD_ROOT%{_bindir}/osuckem_sh
 
