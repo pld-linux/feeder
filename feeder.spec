@@ -17,12 +17,12 @@ BuildArch:	noarch
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %package server
-Summary:        Support for compressed usenet feeds
-Summary(pl):    Obs³uga feedu kompresowanych newsów
-Requires:	Perl-cgi
-Group:          Applications/System
-Group(de):      Applikationen/System
-Group(pl):      Aplikacje/System
+Summary:	Support for compressed usenet feeds - server side
+Summary(pl):	Obs³uga feedu kompresowanych newsów - skrypt serwerowy
+Requires:	perl-CGI
+Group:		Applications/System
+Group(de):	Applikationen/System
+Group(pl):	Aplikacje/System
 
 %description
 A set of client scripts for downloading compressed newsfeed and
@@ -30,17 +30,17 @@ transfering it to a local (proxy)newsserver.
 
 %description -l pl
 Zestaw skryptów klienckich do ¶ci±gania i transferu do lokalnego
-news(proxy)serwera postów w kompresowanych paczkach.
+(proxy)newsserwera postów w kompresowanych paczkach.
 
 
 %description server
 A set of server scripts for downloading compressed newsfeed and
 transfering it to a local (proxy)newsserver.
 
-%description -l pl server
+%description server -l pl
 Zestaw skryptów serwerowych do ¶ci±gania i transferu do lokalnego
-news(proxy)serwera postów w kompresowanych paczkach i udostêpniania ich
-klientom.
+(proxy)newsserwera postów w kompresowanych paczkach i udostêpniania
+ich klientom.
 
 %prep
 %setup -q
