@@ -4,7 +4,7 @@ Summary(pl):	Obs³uga feedu kompresowanych newsów
 Name:		feeder
 Version:	2.1.4
 %define	oldver	0.99
-Release:	7
+Release:	8
 License:	GPL
 Group:		Applications/News
 Source0:	http://newsy.media-com.com.pl/scripts2/%{name}-%{version}.tar.gz
@@ -31,7 +31,6 @@ Zestaw skryptów klienckich do ¶ci±gania i transferu do lokalnego
 %package server
 Summary:	Support for compressed usenet feeds - server side
 Summary(pl):	Obs³uga feedu kompresowanych newsów - skrypt serwerowy
-Requires:	perl-CGI
 Group:		Applications/News
 
 %description server
@@ -48,7 +47,6 @@ Summary:	Support for compressed usenet feeds - old unauthorizing client
 Summary(pl):	Obs³uga feedu kompresowanych newsów - stary nie autoryzuj±cy siê klient
 Version:	%{oldver}
 Epoch:		1
-Requires:	perl
 Group:		Applications/News
 
 %description old
@@ -118,17 +116,17 @@ install %{name}-%{oldver}/var/spool/news/feeder/last $RPM_BUILD_ROOT%{_var}/spoo
 install %{name}-%{oldver}/var/spool/news/feeder/grupy $RPM_BUILD_ROOT%{_var}/spool/%{name}/groups
 
 cat << EOF >> $RPM_BUILD_ROOT%{_var}/spool/%{name}/groups
-pld.betatesters 0
-pld.cvs.commit 40229
-pld.devel.en 909
-pld.devel.pl 26102
-pld.discuss.pl 125
-pld.installer 1851
-pld.kernel 393
-pld.rc.scripts 78
-pld.users.en 126
-pld.users.pl 11628
-pld.www 19
+pld.betatesters -100
+pld.cvs.commit -100
+pld.devel.en -100
+pld.devel.pl -100
+pld.discuss.pl -100
+pld.installer -100
+pld.kernel -100
+pld.rc.scripts -100
+pld.users.en -100
+pld.users.pl -100
+pld.www -100
 EOF
 
 cat << EOF > $RPM_BUILD_ROOT/etc/sysconfig/interfaces/up.d/ppp/feeder
