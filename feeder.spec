@@ -11,8 +11,9 @@ Source0:	http://newsy.media-com.com.pl/scripts2/%{name}-%{version}.tar.gz
 Source1:	http://newsy.media-com.com.pl/scripts2/server-script/fetcher
 # taken and rpm2cpioed from http://www.media-com.com.pl/~radecki/scripts/feeder-0.99-pre6.src.rpm
 Source2:	feeder-0.99.tar.gz
-Source3:	http://newsy.karnet.pl/sd
-Source4:	http://newsy.karnet.pl/sd.conf
+# taken from http://newsy.karnet.pl/, currently unused
+#Source3:	%{name}-sd
+#Source4:	%{name}-sd.conf
 URL:		http://newsy.media-com.com.pl/
 Patch0:		%{name}-0.99-url_n_notermcap.patch
 BuildRequires:	rpm-perlprov >= 3.0.3-16
