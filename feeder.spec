@@ -101,16 +101,10 @@ install %{name}-0.99/var/spool/news/feeder/last $RPM_BUILD_ROOT%{_var}/spool/%{n
 install %{name}-0.99/var/spool/news/feeder/grupy $RPM_BUILD_ROOT%{_var}/spool/%{name}/groups
 
 cat << EOF > $RPM_BUILD_ROOT/etc/sysconfig/interfaces/up.d/ppp/feeder
-#!/bin/sh
+#!/bin/bash
 
-( sleep 5
-exec 3>&p
-date |& mail news -s "feeder ppp-on, started on $(date)"
-/usr/bin/suckem_perl -q 2>&1 >&p
-/usr/bin/feed2inn -a 2>&1 >&p
-date 2>&1 >&p
-exec 3>&-
-) &
+(( sleep 15; /usr/bin/suckem_perl -q ; /usr/bin/feed2inn -a ) 2>&1 | mail \
+-s "feeder ppp-on, started on $(date)" news ) &
 
 EOF
 
