@@ -4,7 +4,7 @@ Summary(pl):	Obs³uga feedu kompresowanych newsów
 Name:		feeder
 Version:	2.1.4
 %define	oldver	0.99
-Release:	6
+Release:	7
 License:	GPL
 Vendor:		feed-pl@egroups.com /subscription required or own server/
 Group:		Applications/News
@@ -79,8 +79,7 @@ Summary(pl):	Automagiczne pobieranie paczek po podniesieniu ppp
 Version:	%{oldver}
 Epoch:		1
 Group:		Applications/News
-Requires:	/usr/bin/suckem_perl
-Requires:	/usr/bin/feed2inn
+Requires:	%{name}-old = %{oldver}
 
 %description old-ppp
 This will automagically fetch news after ppp-up.
