@@ -1,0 +1,96 @@
+--- feeder-0.99/usr/bin/feed2inn~	Sat Apr 22 11:43:37 2000
++++ feeder-0.99/usr/bin/feed2inn	Tue Aug  6 23:17:19 2002
+@@ -21,7 +21,7 @@
+ my $INNXMIT	= "/usr/bin/innxmit";
+ my $NNTPSERVER	= "localhost";
+ 
+-my $DIR		= '/var/spool/news/feeder';
++my $DIR		= '/var/spool/feeder';
+ 
+ my $TMP		= "$DIR/tmp";
+ my $ARTICLES	= "$TMP/articles";
+--- feeder-0.99/usr/bin/suckem_perl~	Tue May  9 13:08:44 2000
++++ feeder-0.99/usr/bin/suckem_perl	Sat Oct  5 07:38:19 2002
+@@ -32,11 +32,12 @@
+ use Getopt::Std;
+ use IO::Socket;
+ use IO::Handle;
++use Term::Cap;
+ use Symbol;
+ 
+-my $REMOTE_ADDR	= 'http://www.media-com.com.pl/~radecki/'; # na koncu _musi_ byæ '/'
++my $REMOTE_ADDR	= 'http://www.karnet.pl/newsy/'; # na koncu _musi_ byæ '/'
+ 
+-my $MAINDIR	= '/var/spool/news/feeder'; # a tu bez '/'!
++my $MAINDIR	= '/var/spool/feeder'; # a tu bez '/'!
+ my $RECEIVED	= "$MAINDIR/received";
+ my $GRUPY	= "$MAINDIR/groups";
+ my $maxclients	= 5;
+@@ -45,16 +46,18 @@
+ 
+ getopts('dq', \%args); #debug, quiet
+ 
+-my $terminal;
++#my $terminal;
++
+ if (! $args{q}) {
+ 	use Term::Cap;
+ 	require POSIX;
+ 	my $termios = new POSIX::Termios;
+ 	$termios->getattr;
+ 	my $ospeed = $termios->getospeed;
+-	$terminal = Tgetent Term::Cap { TERM => undef, OSPEED => $ospeed };
+-	$terminal->Trequire(qw/ce ku kd/);
++#	$terminal = Tgetent Term::Cap { TERM => undef, OSPEED => $ospeed };
++#	$terminal->Trequire(qw/ce ku kd/);
+ #	$terminal->Tputs('r1',1,  *STDOUT);
++	print `tput clear`;
+ }
+ 
+ my $start_time = time();
+@@ -256,16 +259,22 @@
+ 	my $curr_time = time() - $start_time;
+ 
+ 	if (! $args{q}) {
+-		$terminal->Tgoto('cm', 0, 0, *STDOUT);
++#		$terminal->Tgoto('cm', 0, 0, *STDOUT);
++		print `tput cup 0 0`;
+ 		for my $l (0..$maxclients-1) {
+-			$terminal->Tputs('ce', 1, *STDOUT);
++#			$terminal->Tputs('ce', 1, *STDOUT);
++		print `tput cup 1`;	
++		print `tput cup $l 0`;
++		print `tput ce`;
+ 			if (defined(@{$clients[$l]}[0])) {
+ 				print $l+1, "+ ", @{$clients[$l]}[0],
+ 				".", @{$clients[$l]}[1], "\n";
+ 			} else {print "$l-\n"}
++			print "\n";
+ 		}
+ 	print "[", '#' x $i, ' ' x (50 - $i) , "]\n";
+-	$terminal->Tputs('ce', 1, *STDOUT);
++	print `tput el`;
++	#$terminal->Tputs('ce', 1, *STDOUT);
+ 	print "Elapsed time: ", $curr_time, " sec,\tAverage speed: ", ($curr_time == 0) ? 0:int($global_size/($curr_time+1)),
+ 		" Bps,\tTotal size: ", int($global_size/1024)," kB\n";
+ 	}	
+@@ -278,9 +287,13 @@
+ 		if ($i) {warn "B³±d w czasie pobierania pliku, ponawiam próbê\n"}
+ 		@wynik = eval {
+ 			local $/="\r\n";
++			print "$_[0]";
+ 			my $sokecik=IO::Socket::INET->new(PeerAddr => "$remote_server", PeerPort => 80,
+ 				Timeout => 15, Proto => 'tcp');
+-			$sokecik->print("GET $remote_dir$_[0] HTTP/1.0\n\n");
++#			$sokecik->print("GET $remote_dir$_[0] HTTP/1.0\n\n");
++			$sokecik->print("GET $remote_dir$_[0] HTTP/1.1\n");
++			$sokecik->print("Host: $remote_server\n\n");
++#			print "$remote_server, $remote_dir $_[0]";
+ 			my $line = <$sokecik>;
+ 			my $status;
+ 			$line =~ /^\S+\s+(\d+)/;
+@@ -298,4 +311,3 @@
+ }
+ 
+ #EOF
+-
