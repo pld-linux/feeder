@@ -7,8 +7,6 @@ Release:	2
 License:	GPL
 Vendor:		feed-pl@egroups.com /subscription required or own server/
 Group:		Applications/System
-Group(de):	Applikationen/System
-Group(pl):	Aplikacje/System
 URL:		http://newsy.media-com.com.pl/
 Source0:	http://newsy.media-com.com.pl/scripts2/%{name}-%{version}.tar.gz
 Source1:	http://newsy.media-com.com.pl/scripts2/server-script/fetcher
@@ -21,8 +19,6 @@ Summary:	Support for compressed usenet feeds - server side
 Summary(pl):	Obs³uga feedu kompresowanych newsów - skrypt serwerowy
 Requires:	perl-CGI
 Group:		Applications/System
-Group(de):	Applikationen/System
-Group(pl):	Aplikacje/System
 
 %description
 A set of client scripts for downloading compressed newsfeed and
