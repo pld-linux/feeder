@@ -44,7 +44,7 @@ ich klientom.
 
 %package old
 Summary:	Support for compressed usenet feeds - old unauthorizing client
-Summary(pl):	Obs³uga feedu kompresowanych newsów - stary nieautryzuj±cy siê klient
+Summary(pl):	Obs³uga feedu kompresowanych newsów - stary nie autoryzuj±cy siê klient
 Requires:	perl
 Group:		Applications/News
 
@@ -57,9 +57,9 @@ nttp utilities to post news. (rpost might be good start)
 %description old -l pl
 Zestaw skryptów klienckich do ¶ci±gania i transferu do lokalnego
 newsserwera; skrypty te nie wymagaj± autoryzacji z serwerem news, ale
-nie umo¿liwiaj± wysy³ania artyku³ów, konieczne s± dodatkowe narzêdzia,
-aby wysy³aæ artyku³y do zdalnych serwerów. (rpost mo¿e byæ dobrym
-pocz±tkiem)
+nie umo¿liwiaj± wysy³ania artyku³ów; konieczne s± dodatkowe narzêdzia,
+aby wysy³aæ artyku³y do zdalnych serwerów (rpost mo¿e byæ dobrym
+pocz±tkiem).
 
 %package old-ppp
 Summary:	Automagic get-news on ppp-up
@@ -69,18 +69,16 @@ Requires:	/usr/bin/suckem_perl
 Requires:	/usr/bin/feed2inn
 
 %description old-ppp
-This will automagicaly fetch news after ppp-up.
+This will automagically fetch news after ppp-up.
 
 %description old-ppp -l pl
 Ten pakiet automagicznie ¶ci±gnie paczki po ppp-up.
 
 %prep
 %setup -q -a2
-echo $PWD
 %patch -p0
 
 %install
-
 rm -rf $RPM_BUILD_ROOT
 install -d $RPM_BUILD_ROOT%{_sysconfdir}/sysconfig/interfaces/up.d/ppp \
 	$RPM_BUILD_ROOT{%{_bindir},%{_sbindir},%{perl_sitelib}/Feeder} \
