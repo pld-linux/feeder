@@ -29,23 +29,23 @@ news(proxy)serwera postów w kompresowanych paczkach.
 %setup -q
 
 %install
-%{__rm} -rf $RPM_BUILD_ROOT
-%{__install} -d $RPM_BUILD_ROOT%{_sysconfdir} \
+rm -rf $RPM_BUILD_ROOT
+install -d $RPM_BUILD_ROOT%{_sysconfdir} \
 	$RPM_BUILD_ROOT{%{_bindir},%{perl_sitelib}/Feeder} \
 	$RPM_BUILD_ROOT{%{_mandir}/pl/man{1,5,7},%{_var}/spool/%{name}2}
 
-%{__install} etc/feeder.conf $RPM_BUILD_ROOT%{_sysconfdir}
-%{__install} usr/lib/perl5/site_perl/Feeder/feeder.pm $RPM_BUILD_ROOT%{perl_sitelib}/Feeder
-%{__install} usr/local/bin/* $RPM_BUILD_ROOT%{_bindir}
-%{__install} usr/local/share/man/pl/man1/* $RPM_BUILD_ROOT%{_mandir}/pl/man1
-%{__install} usr/local/share/man/pl/man5/* $RPM_BUILD_ROOT%{_mandir}/pl/man5
-%{__install} usr/local/share/man/pl/man7/* $RPM_BUILD_ROOT%{_mandir}/pl/man7
-%{__install} var/spool/feeder2/* $RPM_BUILD_ROOT%{_var}/spool/%{name}2
+install etc/feeder.conf $RPM_BUILD_ROOT%{_sysconfdir}
+install usr/lib/perl5/site_perl/Feeder/feeder.pm $RPM_BUILD_ROOT%{perl_sitelib}/Feeder
+install usr/local/bin/* $RPM_BUILD_ROOT%{_bindir}
+install usr/local/share/man/pl/man1/* $RPM_BUILD_ROOT%{_mandir}/pl/man1
+install usr/local/share/man/pl/man5/* $RPM_BUILD_ROOT%{_mandir}/pl/man5
+install usr/local/share/man/pl/man7/* $RPM_BUILD_ROOT%{_mandir}/pl/man7
+install var/spool/feeder2/* $RPM_BUILD_ROOT%{_var}/spool/%{name}2
 
-%{__gzip} -9nf ChangeLog README
+gzip -9nf ChangeLog README
 
 %clean
-%{__rm} -rf $RPM_BUILD_ROOT
+rm -rf $RPM_BUILD_ROOT
 
 %files
 %defattr(644,root,root,755)
