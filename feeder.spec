@@ -13,7 +13,7 @@ Source0:	%{name}-%{version}.tar.gz
 #Source1:	http://newsy.media-com.com.pl/scripts2/server-script/fetcher
 Source1:	fetcher
 # taken and rpm2cpioed from http://www.media-com.com.pl/~radecki/scripts/feeder-0.99-pre6.src.rpm
-Source2:	feeder-%{oldver}.tar.gz
+Source2:	%{name}-%{oldver}.tar.gz
 # Source2-md5:	202e4317dcd98b793dfcf12c0ffcc855
 # taken from http://newsy.karnet.pl/, currently unused
 #Source3:	%{name}-sd
@@ -152,12 +152,12 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_bindir}/feed2*
 %attr(755,root,root) %{_bindir}/get-news
 %{perl_vendorlib}/Feeder
-%attr(660,root,news) %config(noreplace) %verify(not md5 size mtime) %{_sysconfdir}/%{name}.conf
+%attr(660,root,news) %config(noreplace) %verify(not md5 mtime size) %{_sysconfdir}/%{name}.conf
 %attr(755,news,news) %dir %{_var}/spool/%{name}2
 %attr(2775,news,news) %dir %{_var}/spool/%{name}2/archive
 %attr(2775,news,news) %dir %{_var}/spool/%{name}2/received
-%attr(664,news,news) %config(noreplace) %verify(not md5 size mtime) %{_var}/spool/%{name}2/groups
-%attr(664,news,news) %config(noreplace) %verify(not md5 size mtime) %{_var}/spool/%{name}2/killfile
+%attr(664,news,news) %config(noreplace) %verify(not md5 mtime size) %{_var}/spool/%{name}2/groups
+%attr(664,news,news) %config(noreplace) %verify(not md5 mtime size) %{_var}/spool/%{name}2/killfile
 %lang(pl) %{_mandir}/pl/man?/*
 
 %files server
@@ -178,9 +178,9 @@ rm -rf $RPM_BUILD_ROOT
 %attr(2775,news,news) %dir %{_var}/spool/%{name}/old
 %attr(2775,news,news) %dir %{_var}/spool/%{name}/received
 %attr(2775,news,news) %dir %{_var}/spool/%{name}/tmp
-%attr(664,news,news) %config(noreplace) %verify(not md5 size mtime) %{_var}/spool/%{name}/groups
-%attr(664,news,news) %config(noreplace) %verify(not md5 size mtime) %{_var}/spool/%{name}/last
+%attr(664,news,news) %config(noreplace) %verify(not md5 mtime size) %{_var}/spool/%{name}/groups
+%attr(664,news,news) %config(noreplace) %verify(not md5 mtime size) %{_var}/spool/%{name}/last
 
 %files old-ppp
 %defattr(644,root,root,755)
-%attr(755,root,root) %config(noreplace) %verify(not md5 size mtime) /etc/sysconfig/interfaces/up.d/ppp/feeder
+%attr(640,root,root) %config(noreplace) %verify(not md5 mtime size) /etc/sysconfig/interfaces/up.d/ppp/feeder
