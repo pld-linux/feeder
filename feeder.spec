@@ -1,6 +1,6 @@
 %include	/usr/lib/rpm/macros.perl
 Summary:	Support for compressed usenet feeds
-Summary(pl):	Obs³uga feedu kompresowanych newsów
+Summary(pl.UTF-8):   ObsÅ‚uga feedu kompresowanych newsÃ³w
 Name:		feeder
 Version:	2.1.4
 %define	oldver	0.99
@@ -29,27 +29,27 @@ BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 A set of client scripts for downloading compressed newsfeed and
 transfering it to a local (proxy)newsserver.
 
-%description -l pl
-Zestaw skryptów klienckich do ¶ci±gania i transferu do lokalnego
-(proxy)newsserwera postów w kompresowanych paczkach.
+%description -l pl.UTF-8
+Zestaw skryptÃ³w klienckich do Å›ciÄ…gania i transferu do lokalnego
+(proxy)newsserwera postÃ³w w kompresowanych paczkach.
 
 %package server
 Summary:	Support for compressed usenet feeds - server side
-Summary(pl):	Obs³uga feedu kompresowanych newsów - skrypt serwerowy
+Summary(pl.UTF-8):   ObsÅ‚uga feedu kompresowanych newsÃ³w - skrypt serwerowy
 Group:		Applications/News
 
 %description server
 A set of server scripts for downloading compressed newsfeed and
 transfering it to a local (proxy)newsserver.
 
-%description server -l pl
-Zestaw skryptów serwerowych do ¶ci±gania i transferu do lokalnego
-(proxy)newsserwera postów w kompresowanych paczkach i udostêpniania
+%description server -l pl.UTF-8
+Zestaw skryptÃ³w serwerowych do Å›ciÄ…gania i transferu do lokalnego
+(proxy)newsserwera postÃ³w w kompresowanych paczkach i udostÄ™pniania
 ich klientom.
 
 %package old
 Summary:	Support for compressed usenet feeds - old unauthorizing client
-Summary(pl):	Obs³uga feedu kompresowanych newsów - stary nie autoryzuj±cy siê klient
+Summary(pl.UTF-8):   ObsÅ‚uga feedu kompresowanych newsÃ³w - stary nie autoryzujÄ…cy siÄ™ klient
 Version:	%{oldver}
 Epoch:		1
 Group:		Applications/News
@@ -64,20 +64,20 @@ distinguishing from new feeder.
 NOTE2: the pld.* hierarchy from news.wsisiz.edu.pl is automagically
 added to groups file.
 
-%description old -l pl
-Zestaw skryptów klienckich do ¶ci±gania i transferu do lokalnego
-newsserwera; skrypty te nie wymagaj± autoryzacji z serwerem news, ale
-nie umo¿liwiaj± wysy³ania artyku³ów; konieczne s± dodatkowe narzêdzia,
-aby wysy³aæ artyku³y do zdalnych serwerów (rpost mo¿e byæ dobrym
-pocz±tkiem).
-UWAGA: przez nazwami skryptów wykonywalnych dodano literkê 'o' aby
-rozró¿niæ nowy feeder od starego.
-UWAGA2: hierarchia grup pld.* z news.wsisiz.edu.pl zosta³a
+%description old -l pl.UTF-8
+Zestaw skryptÃ³w klienckich do Å›ciÄ…gania i transferu do lokalnego
+newsserwera; skrypty te nie wymagajÄ… autoryzacji z serwerem news, ale
+nie umoÅ¼liwiajÄ… wysyÅ‚ania artykuÅ‚Ã³w; konieczne sÄ… dodatkowe narzÄ™dzia,
+aby wysyÅ‚aÄ‡ artykuÅ‚y do zdalnych serwerÃ³w (rpost moÅ¼e byÄ‡ dobrym
+poczÄ…tkiem).
+UWAGA: przez nazwami skryptÃ³w wykonywalnych dodano literkÄ™ 'o' aby
+rozrÃ³Å¼niÄ‡ nowy feeder od starego.
+UWAGA2: hierarchia grup pld.* z news.wsisiz.edu.pl zostaÅ‚a
 automagicznie dodana do pliku groups.
 
 %package old-ppp
 Summary:	Automagic get-news on ppp-up
-Summary(pl):	Automagiczne pobieranie paczek po podniesieniu ppp
+Summary(pl.UTF-8):   Automagiczne pobieranie paczek po podniesieniu ppp
 Version:	%{oldver}
 Epoch:		1
 Group:		Applications/News
@@ -86,8 +86,8 @@ Requires:	%{name}-old = 1:%{oldver}
 %description old-ppp
 This will automagically fetch news after ppp-up.
 
-%description old-ppp -l pl
-Ten pakiet automagicznie ¶ci±gnie paczki po ppp-up.
+%description old-ppp -l pl.UTF-8
+Ten pakiet automagicznie Å›ciÄ…gnie paczki po ppp-up.
 
 %prep
 %setup -q -a2
