@@ -1,6 +1,6 @@
 %include	/usr/lib/rpm/macros.perl
 Summary:	Support for compressed usenet feeds
-Summary(pl.UTF-8):   Obsługa feedu kompresowanych newsów
+Summary(pl.UTF-8):	Obsługa feedu kompresowanych newsów
 Name:		feeder
 Version:	2.1.4
 %define	oldver	0.99
@@ -35,7 +35,7 @@ Zestaw skryptów klienckich do ściągania i transferu do lokalnego
 
 %package server
 Summary:	Support for compressed usenet feeds - server side
-Summary(pl.UTF-8):   Obsługa feedu kompresowanych newsów - skrypt serwerowy
+Summary(pl.UTF-8):	Obsługa feedu kompresowanych newsów - skrypt serwerowy
 Group:		Applications/News
 
 %description server
@@ -49,7 +49,7 @@ ich klientom.
 
 %package old
 Summary:	Support for compressed usenet feeds - old unauthorizing client
-Summary(pl.UTF-8):   Obsługa feedu kompresowanych newsów - stary nie autoryzujący się klient
+Summary(pl.UTF-8):	Obsługa feedu kompresowanych newsów - stary nie autoryzujący się klient
 Version:	%{oldver}
 Epoch:		1
 Group:		Applications/News
@@ -77,7 +77,7 @@ automagicznie dodana do pliku groups.
 
 %package old-ppp
 Summary:	Automagic get-news on ppp-up
-Summary(pl.UTF-8):   Automagiczne pobieranie paczek po podniesieniu ppp
+Summary(pl.UTF-8):	Automagiczne pobieranie paczek po podniesieniu ppp
 Version:	%{oldver}
 Epoch:		1
 Group:		Applications/News
