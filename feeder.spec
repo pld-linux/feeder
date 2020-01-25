@@ -1,4 +1,3 @@
-%include	/usr/lib/rpm/macros.perl
 Summary:	Support for compressed usenet feeds
 Summary(pl.UTF-8):	Obsługa feedu kompresowanych newsów
 Name:		feeder
