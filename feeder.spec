@@ -90,8 +90,8 @@ Ten pakiet automagicznie ściągnie paczki po ppp-up.
 
 %prep
 %setup -q -a2
-%patch0 -p0
-%patch1 -p1
+%patch -P0 -p0
+%patch -P1 -p1
 
 %install
 rm -rf $RPM_BUILD_ROOT
